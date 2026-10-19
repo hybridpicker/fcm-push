@@ -56,10 +56,10 @@ class Fcm implements DriverInterface
             $report = $this->messaging->sendMulticast($message, $tokens);
         } catch (MessagingException $e) {
             // Not the exception object: it carries the request, including the title, the text and the tokens
-            Yii::warning('Messaging Exception ' . $e::class . ': ' . $e->getMessage(), 'fcm-push');
+            Yii::warning('Messaging Exception ' . $e::class . ' (' . LogHelper::errorCode($e) . '): ' . $e->getMessage(), 'fcm-push');
             return new SendReport(SendReport::STATE_ERROR);
         } catch (FirebaseException $e) {
-            Yii::warning('Firebase Exception ' . $e::class . ': ' . $e->getMessage(), 'fcm-push');
+            Yii::warning('Firebase Exception ' . $e::class . ' (' . LogHelper::errorCode($e) . '): ' . $e->getMessage(), 'fcm-push');
             return new SendReport(SendReport::STATE_ERROR);
         }
 
@@ -71,7 +71,7 @@ class Fcm implements DriverInterface
             foreach ($report->failures()->getItems() as $failure) {
                 $error = $failure->error();
                 Yii::warning(
-                    'FCM send failure for token ' . LogHelper::tokenId($failure->target()->value()) . ': '
+                    'FCM send failure ' . LogHelper::errorCode($error) . ' for token ' . LogHelper::tokenId($failure->target()->value()) . ': '
                     . ($error?->getMessage() ?? 'unknown error'),
                     'fcm-push',
                 );

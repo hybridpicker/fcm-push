@@ -11,6 +11,7 @@ Changelog
 - Chng: Tabler icon names instead of Font Awesome ones (humhub/humhub#8504)
 - Chng: Requires HumHub 1.20
 - Fix: Do not write the whole exception or response objects of failed pushes (with the request: title, text, device tokens) and complete device tokens to the log; log the error message and a short token identifier instead
+- Enh: Log the FCM error code (e.g. `THIRD_PARTY_AUTH_ERROR`, `SENDER_ID_MISMATCH`, `QUOTA_EXCEEDED`) of failed pushes
 
 2.3.1 (October 12, 2026)
 ------------------------
